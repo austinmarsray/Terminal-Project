@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <title>地图显示</title>
+    <style>
+        html,
+        body,
+        #container {
+          width: 100%;
+          height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div class="info" id="text">
+    请用鼠标在地图上操作试试
+</div>
+<div class="input-card" style="width:16rem">
+    <h4>地图点击相关事件</h4>
+    <div>
+      <div class="input-item">
+        <button id="clickOn" class="btn" style="margin-right:1rem;">绑定事件</button>
+        <button id="clickOff" class="btn">解绑事件</button>
+      </div>
+    </div>
+</div>
+<!-- 加载地图JSAPI脚本 -->
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=cff287a156c2444c5917d3f4198cf62a"></script>
+<script>
+    var map = new AMap.Map('container', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zooms: [6,8], //初始化地图层级
+        center: [106.108081,29.208831], //初始化地图中心点
+		layers: [
+			new AMap.TileLayer.RoadNet()
+		]
+    });
+	
+	// 事件绑定
+    function clickOn(){ 
+        map.on('click', showInfoClick);
+        map.on('dblclick', showInfoDbClick);
+    }
+    // 解绑事件
+    function clickOff(){
+        map.off('click', showInfoClick);
+        map.off('dblclick', showInfoDbClick);
+    }
+	
+	function showInfoClick(e){
+        var text = '单击坐标 [ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ] '
+        document.querySelector("#text").innerText = text;
+    }
+    function showInfoDbClick(e){
+        var text = '双击坐标 [ '+e.lnglat.getLng()+','+e.lnglat.getLat()+' ] '
+        document.querySelector("#text").innerText = text;
+    }
+	// 给按钮绑定事件
+    document.getElementById("clickOn").onclick = clickOn;
+    document.getElementById("clickOff").onclick = clickOff;
+	
+</script>
+</body>
+</html>
