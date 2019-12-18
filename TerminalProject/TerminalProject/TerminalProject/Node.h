@@ -4,6 +4,7 @@ class Node
 {
 private:
 	int code;		//结点编号
+	int type;	//节点类型
 	double longitude;	//经度
 	double latitude;  //纬度
 	double weight;    //权重
@@ -11,21 +12,23 @@ private:
 public:
 	Node() { next = nullptr; }
 
-	Node(int code, double longitude, double latitude, double weight) 
-		:code(code), longitude(longitude), latitude(latitude),weight(weight) { next = nullptr; }
+	Node(int code, int type, double longitude, double latitude, double weight) 
+		:code(code), type(type), longitude(longitude), latitude(latitude),weight(weight) { next = nullptr; }
 
 	Node(const Node &node)
 	{
 		code = node.code;
+		type = node.type;
 		longitude = node.longitude;
 		latitude = node.latitude;
 		weight = node.weight;
-		next = node.next;
+		next = nullptr;
 	}
 
-	void setinfo(int code, double longitude, double latitude, double weight)
+	void setinfo(int code, int type, double longitude, double latitude, double weight)
 	{
 		this->code = code;
+		this->type = type;
 		this->longitude = longitude;
 		this->latitude = latitude;
 		this->weight = weight;

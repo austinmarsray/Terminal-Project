@@ -9,6 +9,7 @@ class TerminalProject : public QMainWindow
 
 public:
 	TerminalProject(QWidget *parent = Q_NULLPTR);
+	~TerminalProject();
 
 private:
 	Ui::TerminalProjectClass ui;
