@@ -49,5 +49,36 @@ public:
 	{
 		next = nextNode;
 	}
+
+	int gettype()
+	{
+		return type;
+	}
+
+	double getlongitude()
+	{
+		return longitude;
+	}
+
+	double getlatitude()
+	{
+		return latitude;
+	}
+
+	double getweight()
+	{
+		return weight;
+	}
+
+	int getcode()
+	{
+		return code;
+	}
+
+	Node *getnext()
+	{
+		return next;
+	}
+
 	friend class Graph;
 };
