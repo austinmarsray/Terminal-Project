@@ -117,6 +117,8 @@ Node* Graph::SelectPath(int start, int level)
 
 	std::priority_queue<node> q;
 	q.push(node{ start ,0});
+
+	int k = 0;//path数组变量
 	
 	while (!q.empty()) 
 	{
@@ -140,10 +142,16 @@ Node* Graph::SelectPath(int start, int level)
 				//---------------------------------------
 				//----------接口调用，实时展示效果---------
 				//---------------------------------------
+
+				path_node[k][0] = curcode;
+				path_node[k][1] = nextcode;
+				k++;
 			}
 			cur = cur->next;
 		}
 	}
+
+	current_path = k;
 
 	//找出路径的终点
 	int end = 0;
@@ -200,4 +208,14 @@ Node* Graph::SelectPath(int start, int level)
 #endif // __DEBUG__
 
 	return path;
+}
+
+void Graph::getpath(int a[][2], int &n)
+{
+	n = current_path;
+	for (int i = 0; i < current_path; i++)
+	{
+		a[i][0] = path_node[i][0];
+		a[i][1] = path_node[i][1];
+	}
 }
