@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	w.show();
 
 	Graph g;
-	g.SelectPath(0,2);
+	g.SelectPath(g.getNodeNum(),2);
 
 
 	return a.exec();

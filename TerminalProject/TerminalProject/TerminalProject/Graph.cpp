@@ -18,7 +18,8 @@ bool Graph::createNode()
 		in >> num;
 		NodeNum = num;
 
-		Vertex = new Node[num];	//创建顶点数组
+		//创建顶点数组，比读入的顶点个数多1，用于存储事故的结点
+		Vertex = new Node[num + 1];
 		if (Vertex == nullptr)
 			return false;
 
@@ -136,10 +137,6 @@ Node* Graph::SelectPath(int start, int level)
 				dist[nextcode] = dist[curcode] + cur->next->weight;
 				parent[nextcode] = curcode;
 				q.push(node{ nextcode,dist[nextcode] });
-
-				//---------------------------------------
-				//----------接口调用，实时展示效果---------
-				//---------------------------------------
 			}
 			cur = cur->next;
 		}
@@ -200,4 +197,29 @@ Node* Graph::SelectPath(int start, int level)
 #endif // __DEBUG__
 
 	return path;
+}
+
+void Graph::addAccident(int code, int type, double longitude, double latitude, double weight)
+{
+	Vertex[NodeNum].setinfo(code, type, longitude, latitude, weight);
+	Vertex[NodeNum].next = nullptr;
+}
+
+void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2,double weight2)
+{
+	Node *cur = &Vertex[NodeNum];
+
+	Node *tem1 = new Node(Vertex[vertex1]);
+	tem1->setweight(weight1);
+	cur->next = tem1;
+
+	cur = cur->next;
+	Node *tem2 = new Node(Vertex[vertex2]);
+	tem2->setweight(weight2);
+	cur->next = tem2;
+}
+
+int Graph::getNodeNum()
+{
+	return NodeNum;
 }
