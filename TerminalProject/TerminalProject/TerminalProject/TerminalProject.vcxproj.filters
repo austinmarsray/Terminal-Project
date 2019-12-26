@@ -25,18 +25,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TerminalProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="document.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="TerminalProject.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Map.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="document.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -57,5 +69,10 @@
     <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="qwebchannel.js">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

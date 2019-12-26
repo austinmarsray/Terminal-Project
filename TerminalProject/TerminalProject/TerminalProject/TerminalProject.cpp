@@ -119,7 +119,29 @@ void TerminalProject::random_node()
 	Graph g;
 	Node *path;
 
-	path = g.SelectPath(0, 2);
+	//
+
+	
+	path = g.SelectPath(g.getNodeNum(), 2);
+
+	//-------------------------------
+	//----------传递到地图------------
+	double totalweight = path->getweight();
+	int Path[100] = { -1 }, i = 0;
+
+	Node *cur = path->getnext();
+	while (cur != nullptr)
+	{
+		Path[i] = cur->getcode();
+		cur = cur->getnext();
+		i++;
+	}
+
+
+	//------------结束----------------
+	//-------------------------------
+
+
 
 	int a[500][2], n;
 	g.getpath(a, n);

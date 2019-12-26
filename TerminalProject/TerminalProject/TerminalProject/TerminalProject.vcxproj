@@ -88,8 +88,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="document.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="TerminalProject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +104,13 @@
     <QtRcc Include="TerminalProject.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="document.h" />
     <ClInclude Include="Graph.h" />
+    <QtMoc Include="Map.h" />
     <ClInclude Include="Node.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="qwebchannel.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
