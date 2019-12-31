@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include<qfile.h>
-#include<string>
-#include"Graph.h"
+#include <QFile>
+#include <QString>
+#include "Graph.h"
 #include "Map.h"
 #include "ShowProcess.h"
 #include "ui_TerminalProject.h"
@@ -17,7 +17,7 @@ public:
 	TerminalProject(QWidget *parent = Q_NULLPTR);
 	~TerminalProject();
 
-	QString getEdgeText(int Path[]);
+	QString getEdgeText(int Path[], int NodeNum, int v1, int v2, double longitude, double latitude);
 
 	void Generator();
 
@@ -27,4 +27,8 @@ signals:
 
 private:
 	Ui::TerminalProjectClass ui;
+	QString arr[20];
+	static int count;
+	int AccidentNum;
 };
+

@@ -16,7 +16,7 @@ bool Graph::createNode()
 		QTextStream in(&file);
 		int num;	//结点个数
 		in >> num;
-		NodeNum = num;
+		NodeNum = num + 1;
 
 		//创建顶点数组，比读入的顶点个数多1，用于存储事故的结点
 		Vertex = new Node[num + 1];
@@ -85,6 +85,11 @@ Graph::Graph()
 		qDebug() << "Graph is created successfully!";
 	else
 		qDebug() << "Graph is fail to be created!";
+}
+
+Graph::~Graph()
+{
+	delete []Vertex;
 }
 
 
@@ -208,15 +213,15 @@ Node* Graph::SelectPath(int start, int level)
 	return path;
 }
 
-void Graph::addAccident(int code, int type, double longitude, double latitude, double weight)
+void Graph::addAccident(double longitude, double latitude)
 {
-	Vertex[NodeNum].setinfo(code, type, longitude, latitude, weight);
-	Vertex[NodeNum].next = nullptr;
+	Vertex[NodeNum - 1].setinfo(NodeNum - 1 , 0, longitude, latitude, 0);
+	Vertex[NodeNum - 1].next = nullptr;
 }
 
 void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2,double weight2)
 {
-	Node *cur = &Vertex[NodeNum];
+	Node *cur = &Vertex[NodeNum - 1];
 
 	Node *tem1 = new Node(Vertex[vertex1]);
 	tem1->setweight(weight1);
