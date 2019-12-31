@@ -18,6 +18,7 @@ public:
 	QWebEngineView *map;
 	Document *m_content;
 	void sendmessage();
-private:
-	QPushButton *btn;
+
+	Document *getdocument();
+	QWebEngineView *getmap();
 };

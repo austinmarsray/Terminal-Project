@@ -4,6 +4,8 @@
 #include<qfile.h>
 #include<string>
 #include"Graph.h"
+#include "Map.h"
+#include "ShowProcess.h"
 #include "ui_TerminalProject.h"
 using namespace std;
 
@@ -14,12 +16,15 @@ class TerminalProject : public QMainWindow
 public:
 	TerminalProject(QWidget *parent = Q_NULLPTR);
 	~TerminalProject();
-	void paintEvent(QPaintEvent *);
-	void fileread();
-	void drawroad(int x1, int x2, int num);//寻路的动态演示
-	void random_node();//随机生成事故点
+
+	QString getEdgeText(int Path[]);
+
+	void Generator();
+
+signals:
+	void signal_map_showpath();
+
 
 private:
 	Ui::TerminalProjectClass ui;
-	Node *v;
 };

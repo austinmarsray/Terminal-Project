@@ -5,15 +5,11 @@
 
 int main(int argc, char *argv[])
 {
+	//≥Ã–Ú∆Ù∂Ø
 	QApplication a(argc, argv);
-
-	//TerminalProject w;
-	//w.show();
-
-	Map m;
-	m.sendmessage();
-	m.show();
 	
+	TerminalProject w;
+	w.show();
 
 	return a.exec();
 }

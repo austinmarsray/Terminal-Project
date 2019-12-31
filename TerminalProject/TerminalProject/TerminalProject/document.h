@@ -16,11 +16,12 @@ class Document : public QObject
 public:
 	explicit Document(QObject *parent = nullptr) : QObject(parent) {}
 
-	void setSendTextText();
+	void setText(const QString &text);
 
-	void getEdgeText(int start, int end);
+	void SendText_F();
 signals:
 	void sendText(const QString &text);
+	void TextSetted();
 
 public slots:
 	void  receiveText(const QString &r_text);

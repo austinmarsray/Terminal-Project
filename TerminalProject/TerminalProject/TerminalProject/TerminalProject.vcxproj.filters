@@ -40,6 +40,9 @@
     <ClCompile Include="document.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShowProcess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="TerminalProject.h">
@@ -69,9 +72,15 @@
     <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShowProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="qwebchannel.js">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data.js">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

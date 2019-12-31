@@ -1,133 +1,82 @@
 #include "TerminalProject.h"
 
-#include <QtWebEngineWidgets/QWebEngineView>
-#include <QtWebEngineWidgets/QWebEnginePage>
-#include <QtWebEngineWidgets/QWebEngineSettings>
+//#include <QtWebEngineWidgets/QWebEngineView>
+//#include <QtWebEngineWidgets/QWebEnginePage>
+//#include <QtWebEngineWidgets/QWebEngineSettings>
 
 TerminalProject::TerminalProject(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+	this->showMaximized();
+
+	//按按钮，触发函数
+	connect(ui.action_generaotr,&QAction::triggered,
+		[=]()
+	{
+		Generator();
+	});
 }
 
 TerminalProject::~TerminalProject()
 {
 }
 
-void TerminalProject::fileread()
+
+
+
+
+
+QString TerminalProject::getEdgeText(int Path[])
 {
-	QPainter painter(this);
+	QString s_text;
 
-	QFile file("NodeData.txt");
-	int number;
-	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-		return;
-	else {
-		QTextStream in(&file);
-		int num;	//结点个数
-		in >> num;
-		number = num;
-		v = new Node[num];	//创建顶点数组
-		if (v == nullptr)
-			return;
-		for (int i = 0; i < num; i++) {
-			QString lo, la;
-			double weight;
-			int level;
-			in >> lo >> la >> weight >> level;
-			string o = lo.toStdString();
-			string a = la.toStdString();
-			double longitude = 0;
-			double latitude = 0;
-			for (int j = 0; j < lo.size(); j++) {
-				if (o[j] != '0' && o[j] != '.') {
-					longitude = longitude * 10 + (o[j] - '0');
-				}
-				if (a[j] != '0' && a[j] != '.') {
-					latitude = latitude * 10 + (a[j] - '0');
-				}
-			}
-			longitude = int(longitude) % 1080;
-			latitude = int(latitude) % 960;
-			v[i].setinfo(i, level, longitude, latitude, weight);
+	int i = 1;
+	while (1)
+	{
+		QString fileName;
+		fileName = QString("./Resources/") + QString::number(Path[i - 1]) + "-" + QString::number(Path[i]) + QString(".txt");
+		qDebug() << fileName;
+		QFile file(fileName);
+		if (file.open(QIODevice::ReadOnly | QIODevice::Text) != true)
+		{
+			qDebug() << "cannot open file." << endl;
 		}
-		file.close();
-	}
-	QFile file1("EdgeData.txt");
-	if (!file1.open(QIODevice::ReadOnly | QIODevice::Text))
-		return;
-	else {
-		QTextStream in(&file1);
-		int num;	//边条数
-		in >> num;
-		for (int i = 0; i < num; i++) {
-			QBrush brush = QBrush();
-			brush.setColor(Qt::black);
-			brush.setStyle(Qt::SolidPattern);
-			painter.setBrush(brush);
-			int v1, v2;
-			double weight;
-			in >> v1 >> v2 >> weight;
-			painter.drawLine(v[v1].getlongitude() + 5, v[v1].getlatitude() + 5, v[v2].getlongitude() + 5, v[v2].getlatitude() + 5);
-			painter.drawText((v[v1].getlongitude() + v[v2].getlongitude()) / 2, (v[v1].getlatitude() + v[v2].getlatitude()) / 2, QString::number(weight));
+		else
+		{ 
+			QTextStream fin(&file);
+			s_text += QString(file.readAll());
+			//qDebug() << s_text;
 		}
+		i++;
+		if (Path[i] == -1)
+			break;
+		else
+			s_text += QString("\n");
 	}
-	for (int i = 0; i < number; i++) {
-		painter.setPen(QColor(Qt::blue));
-		painter.setBrush(QBrush(Qt::gray));
-		painter.drawEllipse(v[i].getlongitude(), v[i].getlatitude(), 20, 20);
-		painter.drawText(v[i].getlongitude() + 5, v[i].getlatitude() + 14, QString::number(i));
-		if (v[i].gettype() != 0) {
-			painter.setPen(QColor(Qt::red));
-			painter.drawText(v[i].getlongitude(), v[i].getlatitude(), QString::number(v[i].gettype()));
-		}
-	}
-
+	return s_text;
 }
 
-void TerminalProject::drawroad(int cur, int next, int num)
+void TerminalProject::Generator()
 {
-	double x1 = v[cur].getlongitude() + 5;
-	double y1 = v[cur].getlatitude() + 5;
-	double x2 = v[cur].getlongitude() + (v[next].getlongitude() - v[cur].getlongitude())*0.7 + 5;
-	double y2 = v[cur].getlatitude() + (v[next].getlatitude() - v[cur].getlatitude())*0.7 + 5;
-	float l = 10.0;
-	float a = 0.5;
-	float x3 = x2 - l * cos(atan2((y2 - y1), (x2 - x1)) - a);
-	float y3 = y2 - l * sin(atan2((y2 - y1), (x2 - x1)) - a);
-	float x4 = x2 - l * sin(atan2((x2 - x1), (y2 - y1)) - a);
-	float y4 = y2 - l * cos(atan2((x2 - x1), (y2 - y1)) - a);
-	QPainter painter(this);
-	if (num == 1) {
-		painter.setPen(QColor(Qt::blue));
-		painter.drawLine(x2, y2, x3, y3);
-		painter.drawLine(x2, y2, x4, y4);
-		painter.drawLine(x1, y1, x2, y2);
-		//painter.drawLine(x1, y1, v[next].getlongitude(), v[next].getlatitude());
-	}
-	if (num == 2) {
-		painter.setPen(QColor(Qt::green));
-		painter.drawLine(x2, y2, x3, y3);
-		painter.drawLine(x2, y2, x4, y4);
-		painter.drawLine(x1, y1, x2, y2);
-		painter.drawLine(x1, y1, v[next].getlongitude() + 5, v[next].getlatitude() + 5);
-	}
-}
+	//产生事故信息
 
-void TerminalProject::random_node()
-{
+
 	Graph g;
+	////g.addAccident();
+	////g.addAccidentEdge();
+
 	Node *path;
 
-	//
-
-	
-	path = g.SelectPath(g.getNodeNum(), 2);
-
-	//-------------------------------
-	//----------传递到地图------------
+	path = g.SelectPath(55, 2);
 	double totalweight = path->getweight();
-	int Path[100] = { -1 }, i = 0;
+
+
+	int Path[100], i = 0;
+	for (int i = 0; i <= 99; i++)
+	{
+		Path[i] = -1;
+	}
 
 	Node *cur = path->getnext();
 	while (cur != nullptr)
@@ -137,34 +86,8 @@ void TerminalProject::random_node()
 		i++;
 	}
 
+	//过程展示
 
-	//------------结束----------------
-	//-------------------------------
-
-
-
-	int a[500][2], n;
-	g.getpath(a, n);
-	for (int i = 0; i < n; i++) {
-		drawroad(a[i][0], a[i][1], 1);
-	}
-
-	int path_node[100];
-	int k = 0;
-	path = path->getnext();
-	while (path != nullptr) {
-		path_node[k] = path->getcode();
-		k++;
-		path = path->getnext();
-	}k--;
-	for (k; k > 0; k--) {
-		drawroad(path_node[k], path_node[k - 1], 2);
-	}
-}
-
-
-void TerminalProject::paintEvent(QPaintEvent *)
-{
-	fileread();
-	random_node();
+	//Path[0] = 0; Path[1] = 1; Path[2] = 23;
+	ui.centralWidget->getdocument()->setText(getEdgeText(Path));
 }
