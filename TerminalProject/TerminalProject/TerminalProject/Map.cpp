@@ -7,7 +7,9 @@ Map::Map(QWidget *parent)
 	this->showMaximized();
 	map = new QWebEngineView(this);
 	map->resize(1900, 1000);
-	map->page()->setUrl(QUrl("C:/Users/Austin/Desktop/index1.html"));
+	QDir Htmlpath = "./map.html";
+	QString HtmlPath = Htmlpath.absolutePath();
+	map->page()->setUrl(QUrl(HtmlPath));
 	map->show();
 
 	m_content = new Document(this);
@@ -20,7 +22,9 @@ Map::Map(QWidget *parent)
 	connect(this->m_content, &Document::TextSetted,
 		[=]()
 		{
-			map->page()->setUrl(QUrl("C:/Users/Austin/Desktop/index1.html"));
+			QDir Htmlpath_ = "./map.html";
+			QString HtmlPath_ = Htmlpath.absolutePath();
+			map->page()->setUrl(QUrl(HtmlPath_));
 			connect(map->page(), &QWebEnginePage::loadFinished, this->m_content, &Document::SendText_F);
 			qDebug() << "commit succeess!";
 		});

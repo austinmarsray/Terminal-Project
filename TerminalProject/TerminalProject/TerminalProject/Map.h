@@ -6,6 +6,7 @@
 #include <QtWebEngineWidgets>
 #include <QWebEngineView>
 #include <QPushButton>
+#include <QDir>
 
 
 class Map : public QWidget
