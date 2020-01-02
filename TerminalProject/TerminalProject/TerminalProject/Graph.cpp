@@ -222,7 +222,17 @@ void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2, double weig
 	cur->next = tem2;
 }
 
-int Graph::getNodeNum()
+int Graph::getNodeNum() const
 {
 	return NodeNum;
+}
+
+void Graph::getpath(int a[][2], int &n)
+{
+	n = current_path;
+	for (int i = 0; i < current_path; i++)
+	{
+		a[i][0] = path_node[i][0];
+		a[i][1] = path_node[i][1];
+	}
 }

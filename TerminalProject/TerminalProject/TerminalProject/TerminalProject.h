@@ -17,7 +17,7 @@ public:
 	TerminalProject(QWidget *parent = Q_NULLPTR);
 	~TerminalProject();
 
-	QString getEdgeText(int Path[], int NodeNum, int v1, int v2, double longitude, double latitude);
+	QString getEdgeText(const int Path[], int NodeNum, int v1, int v2, double longitude, double latitude);
 
 	void Generator();
 

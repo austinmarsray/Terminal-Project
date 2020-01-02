@@ -1,14 +1,12 @@
 #include "ShowProcess.h"
-
 ShowProcess::ShowProcess(QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
 	fileread();
-	//this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
-	//this->setWindowFlags(Qt::FramelessWindowHint);   //设置无边框窗口
+	this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
+	this->setWindowFlags(Qt::FramelessWindowHint);   //设置无边框窗口
 	ui.widget->installEventFilter(this);
-	ui.textEdit->setPlainText("lalalalalalalalallalala");
 }
 
 ShowProcess::~ShowProcess()
@@ -104,7 +102,35 @@ void ShowProcess::drawline()
 	file1.close();
 }
 
-void ShowProcess::drawroad(int cur, int next, int num, float length)
+void ShowProcess::random_node()
+{
+	for (int i = 0; i < current_path; i++) {
+		if (parent[i][0] >= 0 && parent[i][0] <= 56 && parent[i][1] >= 0 && parent[i][1] <= 56) {
+			drawroad(parent[i][0], parent[i][1], 1);
+		}
+	}
+	Node *p = path;
+	int path_node[100];
+	int k = 0;
+	p = p->getnext();
+	while (p->getnext() != nullptr) {
+		path_node[k] = p->getcode();
+		k++;
+		p = p->getnext();
+	}k--;
+	for (int i = 0; i < k; i++) {
+		drawroad(path_node[i], path_node[i + 1], 2);
+	}
+
+	if (v1.getcode() == v[path_node[k]].getcode()) {
+		drawroad(v1.getcode(), v2.getcode(), 3);
+	}
+	if (v2.getcode() == v[path_node[k]].getcode()) {
+		drawroad(v2.getcode(), v1.getcode(), 3);
+	}
+}
+
+void ShowProcess::drawroad(int cur, int next, int num)
 {
 	int x1 = v[cur].getlongitude() + 5;
 	int y1 = v[cur].getlatitude() + 5;
@@ -140,11 +166,31 @@ void ShowProcess::drawroad(int cur, int next, int num, float length)
 		painter.drawLine(x1, y1, x2, y2);
 		painter.drawLine(x1, y1, v[next].getlongitude() + 5, v[next].getlatitude() + 5);
 	}
-}
+	if (num == 3) {
+		int x2 = v[cur].getlongitude() + (v[next].getlongitude() - v[cur].getlongitude())*0.4 + 5;
+		int y2 = v[cur].getlatitude() + (v[next].getlatitude() - v[cur].getlatitude())*0.4 + 5;
+		int x5 = v[cur].getlongitude() + (v[next].getlongitude() - v[cur].getlongitude())*0.3 + 5;
+		int y5 = v[cur].getlatitude() + (v[next].getlatitude() - v[cur].getlatitude())*0.3 + 5;
+		float l = 10.0;
+		float a = 0.5;
+		float x3 = x5 - l * cos(atan2((y5 - y1), (x5 - x1)) - a);
+		float y3 = y5 - l * sin(atan2((y5 - y1), (x5 - x1)) - a);
+		float x4 = x5 - l * sin(atan2((x5 - x1), (y5 - y1)) - a);
+		float y4 = y5 - l * cos(atan2((x5 - x1), (y5 - y1)) - a);
+		//指定画笔
+		QPen pen(QColor(255, 0, 0));
+		painter.setBrush(QBrush(Qt::yellow));
+		//设置笔宽
+		pen.setWidth(3);
+		painter.setPen(pen);
 
-void ShowProcess::closeEvent(QCloseEvent * event)
-{
-	emit closed();
+		painter.drawLine(x5, y5, x3, y3);
+		painter.drawLine(x5, y5, x4, y4);
+		painter.drawLine(x1, y1, x5, y5);
+		painter.setPen(QColor(0, 0, 0));
+		painter.drawEllipse(x2 - 5, y2 - 5, 10, 10);
+
+	}
 }
 
 void ShowProcess::getPath(Node *a)
@@ -159,27 +205,145 @@ bool ShowProcess::eventFilter(QObject *watched, QEvent *event)
 	return QWidget::eventFilter(watched, event);
 }
 
+void ShowProcess::getParent(int a[][2], int n)
+{
+	current_path = n;
+	for (int i = 0; i < n; i++) {
+		parent[i][0] = a[i][0];
+		parent[i][1] = a[i][1];
+	}
+}
+
 void ShowProcess::paintEvent()
 {
 	drawline();
+	random_node();
 	drawnode();
+	//animation();
+}
 
-	Node *p = path;
-
-	/*int path_node[100];
-	int k = 0;
-	p = p->getnext();
-	while (p != nullptr) {
-		path_node[k] = p->getcode();
-		k++;
-		p = p->getnext();
-	}k--;
-	for (int i = 0; i < k; i++) {
-		drawroad(path_node[i], path_node[i + 1], 2, 0.9);
-	}*/
+void ShowProcess::getNodes(int n1, int n2)
+{
+	v1 = v[n1];
+	v2 = v[n2];
 }
 
 void ShowProcess::on_pushButton_clicked()
 {
 	close();
+}
+
+//动画演示
+void ShowProcess::animation()
+{
+	//还原
+	ui.xun->setGeometry(120, 20, 31, 31);
+	ui.jiu->setGeometry(120, 60, 31, 31);
+	ui.heart->setGeometry(160, 60, 31, 31);
+	QSequentialAnimationGroup *animationgroup = new QSequentialAnimationGroup;
+	ui.textEdit->clear();//清空textedit
+
+	//把寻路过程加入动画组
+	for (int i = 0; i < current_path; i++) {
+		if (parent[i][0] >= 0 && parent[i][0] <= 56 && parent[i][1] >= 0 && parent[i][1] <= 56) {
+			QPropertyAnimation *d = new QPropertyAnimation(ui.xun, "geometry");
+			d->setDuration(600);//设置速度
+			d->setStartValue(QRect(v[parent[i][0]].getlongitude(), v[parent[i][0]].getlatitude(), 30, 30));
+			d->setEndValue(QRect(v[parent[i][1]].getlongitude(), v[parent[i][1]].getlatitude(), 30, 30));
+			d->setEasingCurve(QEasingCurve::Linear);
+			animationgroup->addAnimation(d);
+		}
+	}
+
+	//获取最短路径
+	Node *p = path->getnext();
+	QString s = "救援最短路径：\n";
+	int path_node[100];
+	int k = 0;
+
+	while (p->getnext() != nullptr) {
+		path_node[k] = p->getcode();
+		s = s + QString::number(path_node[k]);
+		if (p->getnext() != nullptr) {
+			s = s + "--->";
+		}
+		k++;
+		p = p->getnext();
+	}k--;
+	s = s + "事故点\n";
+
+	//把最短路径加入动画组
+	for (int i = 0; i < k; i++) {
+		QPropertyAnimation *d = new QPropertyAnimation(ui.jiu, "geometry");
+		d->setDuration(1000);//设置速度
+		d->setStartValue(QRect(v[path_node[i]].getlongitude(), v[path_node[i]].getlatitude(), 30, 30));
+		d->setEndValue(QRect(v[path_node[i + 1]].getlongitude(), v[path_node[i + 1]].getlatitude(), 30, 30));
+		d->setEasingCurve(QEasingCurve::Linear);
+		animationgroup->addAnimation(d);
+	}
+
+	//动画添加到事故点
+	QPropertyAnimation *d = new QPropertyAnimation(ui.jiu, "geometry");
+	d->setDuration(1000);//设置速度
+	d->setStartValue(QRect(v[path_node[k]].getlongitude(), v[path_node[k]].getlatitude(), 30, 30));
+	//int x1 = v[path_node[k]].getlongitude() + (v2.getlongitude() - v1.getlongitude())*0.4;//事故点经度
+	//int y1 = v[path_node[k]].getlatitude() + (v2.getlatitude() - v1.getlatitude())*0.4;//事故点纬度
+	int x1, y1;//事故点经度,事故点纬度
+	if (v1.getcode() == v[path_node[k]].getcode()) {
+		x1 = v[path_node[k]].getlongitude() + (v2.getlongitude() - v1.getlongitude())*0.4;//事故点经度
+		y1 = v[path_node[k]].getlatitude() + (v2.getlatitude() - v1.getlatitude())*0.4;//事故点纬度
+	}
+	else {
+		x1 = v[path_node[k]].getlongitude() + (v1.getlongitude() - v2.getlongitude())*0.4;//事故点经度
+		y1 = v[path_node[k]].getlatitude() + (v1.getlatitude() - v2.getlatitude())*0.4;//事故点纬度
+	}
+	d->setEndValue(QRect(x1, y1, 30, 30));
+	d->setEasingCurve(QEasingCurve::Linear);
+	animationgroup->addAnimation(d);
+
+	for (int i = 0; i < 12; i++) {
+		QPropertyAnimation *d = new QPropertyAnimation(ui.heart, "geometry");
+		d->setDuration(500);//设置速度
+		if (i % 3 == 0) {
+			d->setStartValue(QRect(750, 70, 140, 140));
+			d->setEndValue(QRect(750, 70, 170, 170));
+		}
+		if (1 % 3 == 1) {
+			d->setStartValue(QRect(750, 70, 170, 170));
+			d->setEndValue(QRect(750, 70, 140, 140));
+		}
+		else {
+			d->setStartValue(QRect(750, 70, 140, 140));
+			d->setEndValue(QRect(750, 70, 110, 110));
+		}
+		d->setEasingCurve(QEasingCurve::InCubic);
+		animationgroup->addAnimation(d);
+	}
+
+	animationgroup->start();
+	/*if (flag == 2) {
+		animationgroup->clear();
+		ui.label->setGeometry(110, 20, 21, 21);
+		ui.label_2->setGeometry(110, 50, 21, 21);
+		ui.heart->setGeometry(135, 50, 21, 21);
+	}*/
+
+	s = s + "total_weight：" + QString::number(total_weight);
+	ui.textEdit->setPlainText(s);
+}
+
+void ShowProcess::getLevel(int x)
+{
+	level = x;
+	ui.lineEdit->setText(QString::number(level));
+}
+
+void ShowProcess::gettotal_widget(double value)
+{
+	total_weight = value;
+}
+
+void ShowProcess::closeEvent(QCloseEvent * event)
+{
+	emit closed();
 }

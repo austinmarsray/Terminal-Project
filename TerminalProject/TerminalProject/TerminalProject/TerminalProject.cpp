@@ -41,7 +41,7 @@ TerminalProject::~TerminalProject()
 
 
 
-QString TerminalProject::getEdgeText(int Path[], int NodeNum, int v1, int v2, double longitude, double latitude)
+QString TerminalProject::getEdgeText(const int Path[], int NodeNum, int v1, int v2, double longitude, double latitude)
 {
 	QString s_text;
 
@@ -153,6 +153,9 @@ void TerminalProject::Generator()
 		i++;
 	}
 
+	QString text = getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
+		+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level);
+
 	//过程展示
 	if (ui.action_switch->isChecked())
 	{
@@ -160,18 +163,26 @@ void TerminalProject::Generator()
 		//此处接收到信号，再传递消息给网页
 		ShowProcess *s = new ShowProcess();
 		s->show();
-		int Switch =0;
-		//connect(s,&ShowProcess::closed,
-		//	[=]()
-		//{
-		//	Switch = 1;
-		//});
-		ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
-			+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
+		int a[500][2];//存储寻路过程
+		int current_path;//当前寻路中间数 
+		g.getpath(a, current_path);
+		s->getParent(a, current_path);
+		s->getPath(path);
+		s->getNodes(v1, v2);
+		s->getLevel(level);
+		s->gettotal_widget(totalweight);
+		s->animation();
+		s->paintEngine();
+		s->show();
+		connect(s,&ShowProcess::closed,
+			[=]()
+		{
+			ui.centralWidget->getdocument()->setText(text);
+		});
+		
 	}
 	else
 	{
-		ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
-			+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
+		ui.centralWidget->getdocument()->setText(text);
 	}
 }
