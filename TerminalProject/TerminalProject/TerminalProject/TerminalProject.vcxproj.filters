@@ -54,9 +54,15 @@
     <QtMoc Include="document.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ShowProcess.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="TerminalProject.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ShowProcess.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -70,9 +76,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShowProcess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

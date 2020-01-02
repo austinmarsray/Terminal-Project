@@ -99,13 +99,14 @@
     <QtMoc Include="TerminalProject.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="ShowProcess.ui" />
     <QtUic Include="TerminalProject.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="TerminalProject.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShowProcess.h" />
+    <QtMoc Include="ShowProcess.h" />
     <QtMoc Include="document.h" />
     <ClInclude Include="Graph.h" />
     <QtMoc Include="Map.h" />

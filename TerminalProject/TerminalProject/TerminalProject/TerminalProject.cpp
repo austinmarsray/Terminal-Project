@@ -156,14 +156,18 @@ void TerminalProject::Generator()
 	//过程展示
 	if (ui.action_switch->isChecked())
 	{
-		//showprocess的类中重写closeEvent函数，发送一个信号
+		//showprocess的类中重写closeevent函数，发送一个信号
 		//此处接收到信号，再传递消息给网页
-		//connect(&g,QWidget::exit,
+		ShowProcess *s = new ShowProcess();
+		s->show();
+		int Switch =0;
+		//connect(s,&ShowProcess::closed,
 		//	[=]()
 		//{
-		//	ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
-		//		+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
+		//	Switch = 1;
 		//});
+		ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
+			+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
 	}
 	else
 	{
