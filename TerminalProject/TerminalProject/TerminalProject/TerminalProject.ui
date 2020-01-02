@@ -48,7 +48,14 @@
     </property>
     <addaction name="action_generaotr"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>设置</string>
+    </property>
+    <addaction name="action_switch"/>
+   </widget>
    <addaction name="menu1"/>
+   <addaction name="menu"/>
   </widget>
   <action name="action_generaotr">
    <property name="checkable">
@@ -56,6 +63,17 @@
    </property>
    <property name="text">
     <string>事件生成</string>
+   </property>
+  </action>
+  <action name="action_switch">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>显示运算过程</string>
    </property>
   </action>
  </widget>

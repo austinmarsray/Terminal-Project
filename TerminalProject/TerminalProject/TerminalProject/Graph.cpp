@@ -3,7 +3,6 @@
 #include <QFile>
 #include <qdebug.h>
 #include <queue>
-#define __DEBUG__
 
 
 bool Graph::createNode()
@@ -123,8 +122,6 @@ Node* Graph::SelectPath(int start, int level)
 
 	std::priority_queue<node> q;
 	q.push(node{ start ,0});
-
-	int k = 0;//path数组变量
 	
 	while (!q.empty()) 
 	{
@@ -144,17 +141,10 @@ Node* Graph::SelectPath(int start, int level)
 				dist[nextcode] = dist[curcode] + cur->next->weight;
 				parent[nextcode] = curcode;
 				q.push(node{ nextcode,dist[nextcode] });
-				
-				//MYH
-				path_node[k][0] = curcode;
-				path_node[k][1] = nextcode;
-				k++;
 			}
 			cur = cur->next;
 		}
 	}
-
-	current_path = k;
 
 	//找出路径的终点
 	int end = 0;
@@ -193,22 +183,21 @@ Node* Graph::SelectPath(int start, int level)
 		cur = cur->next;
 		search = parent[search];
 	}
-#ifdef __DEBUG__
-	for (int i = 0; i < NodeNum; i++)
-	{
-		qDebug() << i << " " << parent[i] << " " << dist[i] << endl;
-	}
 
-	cur = path;
-	qDebug() << "total weight = " <<path->weight << endl;
-	cur = cur->next;
+	//for (int i = 0; i < NodeNum; i++)
+	//{
+	//	qDebug() << i << " " << parent[i] << " " << dist[i] << endl;
+	//}
 
-	while (cur != nullptr)
-	{
-		qDebug() << cur->code << "  longitude:" << cur->longitude << "  latitude:" << cur->latitude << endl;
-		cur = cur->next;
-	}
-#endif // __DEBUG__
+	//cur = path;
+	//qDebug() << "total weight = " <<path->weight << endl;
+	//cur = cur->next;
+
+	//while (cur != nullptr)
+	//{
+	//	qDebug() << cur->code << "  longitude:" << cur->longitude << "  latitude:" << cur->latitude << endl;
+	//	cur = cur->next;
+	//}
 
 	return path;
 }
@@ -219,7 +208,7 @@ void Graph::addAccident(double longitude, double latitude)
 	Vertex[NodeNum - 1].next = nullptr;
 }
 
-void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2,double weight2)
+void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2, double weight2)
 {
 	Node *cur = &Vertex[NodeNum - 1];
 
@@ -236,14 +225,4 @@ void Graph::addAccidentEdge(int vertex1, double weight1,int vertex2,double weigh
 int Graph::getNodeNum()
 {
 	return NodeNum;
-}
-
-void Graph::getpath(int a[][2], int &n)
-{
-	n = current_path;
-	for (int i = 0; i < current_path; i++)
-	{
-		a[i][0] = path_node[i][0];
-		a[i][1] = path_node[i][1];
-	}
 }

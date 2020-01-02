@@ -1,4 +1,294 @@
 var datas = [
+	{
+		"coordinate": [106.09021,29.872113],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [105.908931,29.653362],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [105.862739,29.381072],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [105.911481,29.263229],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [105.87836,29.062139],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.026219,28.963805],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.037486,29.364862],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.034454,29.379296],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.237298,29.133761],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.288658,29.194122],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.335523,29.244741],
+		"Level": 2,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.671596,29.001706],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.655082,29.035973],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.597378,29.128597],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.086518,29.138763],
+		"Level": 1,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.571608,29.290794],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.646703,29.339377],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.595673,29.378301],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.5962,29.388103],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.303047,29.442978],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.300677,29.464739],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.439982,29.514116],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.443735,29.537885],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.305221,29.637993],
+		"Level": 0,
+		//"Resources": ""
+	},
+   {
+		"coordinate": [106.321951,29.674256],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.494615,29.608986],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.407628,29.793868],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.738518,29.538512],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.790154,29.632759],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.625769,29.630207],
+		"Level": 2,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.694286,29.747297],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.704073,29.762706],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.69168,29.767357],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.559376,29.772687],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.326088,29.95678],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.521696,29.962477],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [106.921131,29.6142],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.081153,29.851295],
+		"Level": 2,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.262781,29.760656],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.326609,29.682774],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.351644,29.32434],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.173861,29.154195],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.323158,30.258421],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.000528,29.380944],
+		"Level": 2,
+		//"Resources": ""
+	},
+	{
+		"coordinate":  [108.720587,29.524605],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.787535,28.7988],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [109.030695,28.494504],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.733824,30.615273],
+		"Level": 0,
+		//"Resources": ""
+	},
+    {
+		"coordinate": [107.76119,30.297507],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [107.880468,29.994282],
+		"Level": 1,
+		//"Resources": ""
+	},
+    {
+		"coordinate": [108.077433,30.19071],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.17625,30.03053],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.489564,30.761429],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.42025,30.894572],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [108.470145,30.919095],
+		"Level": 2,
+		//"Resources": ""
+	},
+    {
+		"coordinate": [109.586998,31.388097],
+		"Level": 0,
+		//"Resources": ""
+	},
+	{
+		"coordinate": [109.513442,31.069015],
+		"Level": 0,
+		//"Resources": ""
+	},
+	]
+	function getDataFunc(){
+			return datas;
+		}
+/*var datas = [
     [106.09021,29.872113],[105.908931,29.653362],
 	[105.862739,29.381072],[105.911481,29.263229],
 	[105.87836,29.062139],[106.026219,28.963805],
@@ -31,4 +321,4 @@ var datas = [
 	] 
     function getDataFunc(){
 		return datas;
-	}
+	}*/

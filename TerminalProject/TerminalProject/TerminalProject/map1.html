@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  		<meta charset="utf-8">
+		<script src="data.js"></script>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<base href="https://webapi.amap.com/ui/1.0/ui/overlay/SimpleMarker/examples/" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>高速公路应急救援系统展示</title>
+	    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+		<style>
+				html,
+				body,
+				#container {
+					margin: 0px; width: 100%; height: 100% 
+				}
+				.custom-content-marker {
+					position: relative;
+					width: 25px;
+					height: 34px;
+				}
+
+				.custom-content-marker img {
+					width: 100%;
+					height: 100%;
+				}
+		</style>
+		<title>地图加载完成</title>
+		
+</head>
+<body>
+<div class="info" id="text">
+		
+</div>
+<div id="container" class="map"></div>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=ce4203c448e716d8434289ffc2c7a6d6&plugin=Map3D,AMap.DistrictSearch,AMap.Autocomplete"></script>
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+<script type="text/javascript" src="E:/DataStructureProject/Project/TerminalProject/TerminalProject/TerminalProject/qwebchannel.js"></script>
+ <!-- UI组件库 1.0 -->
+<script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script>
+        var infoWindow;
+		var map = new AMap.Map('container', {
+			
+				resizeEnable: true, //是否监控地图容器尺寸变化
+				zooms:[8,13], //地图的缩放层次
+	            center: [107.53172,29.866258], //初始化地图中心点
+	            viewMode: '2D',
+	            labelzIndex: 130,
+	            pitch: 40,
+		});
+		map.setMapStyle('amap://styles/dcf80fea2c8eb7ef9cd2de3de6e4b080')
+		//地图加载完成
+		map.on("complete", function(){
+		       log.success("地图加载完成！");
+	}); 
+	var marker = new AMap.Marker({
+			position: new AMap.LngLat(106.610895,29.503814),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+			title: '重庆'
+	});
+	//获取结点的数据并标记
+	var NodeData = getDataFunc();
+	var lable =[];
+		AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker) {
+				var la=[];
+				for(var i=0;i<NodeData.length;i++)
+				{
+					lnglat=NodeData[i].coordinate;
+					level1=NodeData[i].Level;
+					la[i]=String(i);
+					//利用默认图标
+					var iconTheme = 'default';
+					var iconStyles = SimpleMarker.getBuiltInIconStyles(iconTheme);
+					var icon1;
+					//三种等级的资源点
+					if(NodeData[i].Level==0)
+					{
+						icon1=iconStyles[2];
+					}
+					else if (NodeData[i].Level==1) {
+						icon1=iconStyles[11];
+					}
+					else if (NodeData[i].Level==2) {
+						icon1=iconStyles[13];
+					}
+					new SimpleMarker({
+						iconLabel: la[i],
+						iconStyle: icon1,
+						//设置基点偏移
+						offset: new AMap.Pixel(-10, -30),
+						map: map,
+						showPositionPoint: true,
+						position: lnglat,
+						zIndex: 200
+					});
+				}
+				
+			});
+		//Draw路径
+		AMapUI.load(['ui/misc/PathSimplifier', 'lib/$'], function(PathSimplifier, $) {
+
+				if (!PathSimplifier.supportCanvas) {
+					alert('当前环境不支持 Canvas！');
+					return;
+				}
+
+				var pathSimplifierIns = new PathSimplifier({
+					zIndex: 100,
+					//autoSetFitView:false,
+					map: map, //所属的地图实例
+
+					getPath: function(pathData, pathIndex) {
+
+						return pathData.path;
+					},
+					getHoverTitle: function(pathData, pathIndex, pointIndex) {
+						if (pointIndex >= 0) {
+							//point 
+							return pathData.name + '，点：' + pointIndex + '/' + pathData.path.length;
+						}
+						return pathData.name + '，点数量' + pathData.path.length;
+					},
+					renderOptions: {
+
+						renderAllPointsIfNumberBelow: 100 //绘制路线节点，如不需要可设置为-1
+					}
+				});
+				window.onload = function() {
+				new QWebChannel(qt.webChannelTransport, function(channel) {
+					var content = channel.objects.content;
+					content.sendText.connect(function(message) {
+						Drawline(message);
+						content.receiveText("true");
+					});
+				});
+				}
+				Drawline(arr);
+				
+				function Drawline(arr) {
+					window.pathSimplifierIns = pathSimplifierIns;
+					var Data_A=arr.split("\n")
+					//事故等级and 最短路径长度
+					var LevelAndLen;
+					LevelAndLen=Data_A[Data_A.length-1].split(",");
+					var pathLen=LevelAndLen[0]+" km";
+					var pathLevel=LevelAndLen[1]+" 级";
+					//路径规划
+					var Path_accident=new Array();
+					for(var i=0;i<Data_A.length-1;i++){
+					    Path_accident[i]=new Array(); 
+					}
+					for(var i=0;i<Data_A.length-1;i++)
+					{
+						var path=Data_A[i].split(",")
+						Path_accident[i][0]=path[0];
+						Path_accident[i][1]=path[1];
+					}
+					
+					//自定义事故图标
+					AMapUI.loadUI(['overlay/SimpleMarker'], function(SimpleMarker){
+					new SimpleMarker({
+								iconLabel: '事',
+								//自定义图标地址
+								iconStyle: {
+									src: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png',
+									style: {
+										width: '30px',
+										height: '45px'
+									}
+								},
+								//设置基点偏移
+								offset: new AMap.Pixel(-13, -40),
+								map: map,
+								showPositionPoint: true,
+								position: Path_accident[Data_A.length-2],
+								zIndex: 100
+							});
+					});
+					var info;
+					var accidentlevel="事故等级: "+pathLevel+"\n";
+					var accidentlen="规划救援路径总长度: "+pathLen+"\n";
+					var accidentcoordinate="事故点位置: "+Path_accident[Data_A.length-2];
+					document.querySelector("#text").innerText = accidentlevel+accidentlen+accidentcoordinate;
+					pathSimplifierIns.setData([{
+						name: '路线1',
+						path: Path_accident
+					}]);
+					var dis0_1 = AMap.GeometryUtil.distanceOfLine(Path_accident);
+					//对第一条线路（即索引 0）创建一个巡航器
+					
+					var navg1 = pathSimplifierIns.createPathNavigator(0, {
+									loop: false,
+									speed: 50000,
+									pathNavigatorStyle: {
+										width: 20,
+										height: 20,
+										//使用图片
+										/*content: PathSimplifier.Render.Canvas.getImageContent('https://webapi.amap.com/theme/v1.3/markers/b.png', onload, onerror),*/
+										strokeStyle: 'blue',
+										fillStyle: 'blue',
+										//经过路径的样式
+										disableIfSelected: false ,									
+										pathLinePassedStyle: {
+											lineWidth: 10,
+											strokeStyle: 'blue',
+											dirArrowStyle: {
+												stepSpace: 15,
+												strokeStyle: 'white'
+											}
+											
+									}
+									
+									}
+								});
+					navg1.start()
+				}
+		});
+		
+		</script>
+</body>
+</html>
+

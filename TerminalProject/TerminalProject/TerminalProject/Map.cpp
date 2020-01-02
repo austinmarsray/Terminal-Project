@@ -7,7 +7,7 @@ Map::Map(QWidget *parent)
 	this->showMaximized();
 	map = new QWebEngineView(this);
 	map->resize(1900, 1000);
-	QDir Htmlpath = "./map.html";
+	QDir Htmlpath = "./map1.html";
 	QString HtmlPath = Htmlpath.absolutePath();
 	map->page()->setUrl(QUrl(HtmlPath));
 	map->show();
@@ -22,7 +22,7 @@ Map::Map(QWidget *parent)
 	connect(this->m_content, &Document::TextSetted,
 		[=]()
 		{
-			QDir Htmlpath_ = "./map.html";
+			QDir Htmlpath_ = "./map1.html";
 			QString HtmlPath_ = Htmlpath.absolutePath();
 			map->page()->setUrl(QUrl(HtmlPath_));
 			connect(map->page(), &QWebEnginePage::loadFinished, this->m_content, &Document::SendText_F);

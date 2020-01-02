@@ -1,9 +1,5 @@
 #include "TerminalProject.h"
 
-//#include <QtWebEngineWidgets/QWebEngineView>
-//#include <QtWebEngineWidgets/QWebEnginePage>
-//#include <QtWebEngineWidgets/QWebEngineSettings>
-
 int TerminalProject::count = 0;
 
 TerminalProject::TerminalProject(QWidget *parent)
@@ -42,9 +38,6 @@ TerminalProject::TerminalProject(QWidget *parent)
 TerminalProject::~TerminalProject()
 {
 }
-
-
-
 
 
 
@@ -161,8 +154,20 @@ void TerminalProject::Generator()
 	}
 
 	//过程展示
-
-
-	//Path[0] = 0; Path[1] = 1; Path[2] = 23;
-	ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude));
+	if (ui.action_switch->isChecked())
+	{
+		//showprocess的类中重写closeEvent函数，发送一个信号
+		//此处接收到信号，再传递消息给网页
+		//connect(&g,QWidget::exit,
+		//	[=]()
+		//{
+		//	ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
+		//		+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
+		//});
+	}
+	else
+	{
+		ui.centralWidget->getdocument()->setText(getEdgeText(Path, g.getNodeNum() - 1, v1, v2, longitude, latitude)
+			+ QString("\n") + QString::number(totalweight, 'f', 4) + QString(",") + QString::number(level));
+	}
 }
