@@ -91,7 +91,6 @@ Graph::~Graph()
 	delete []Vertex;
 }
 
-
 Node* Graph::SelectPath(int start, int level)
 {
 	struct node
@@ -121,11 +120,11 @@ Node* Graph::SelectPath(int start, int level)
 	dist[start] = 0;
 
 	std::priority_queue<node> q;
-	q.push(node{ start ,0});
-	
-	while (!q.empty()) 
+	q.push(node{ start ,0 });
+	int k = 0;//path数组变量
+	while (!q.empty())
 	{
-		node x = q.top(); 
+		node x = q.top();
 		q.pop();
 		if (dist[x.vertex] != x.relative_weight)
 			continue;
@@ -141,17 +140,22 @@ Node* Graph::SelectPath(int start, int level)
 				dist[nextcode] = dist[curcode] + cur->next->weight;
 				parent[nextcode] = curcode;
 				q.push(node{ nextcode,dist[nextcode] });
+
+				//MYH
+				path_node[k][0] = curcode;
+				path_node[k][1] = nextcode;
+				k++;
 			}
 			cur = cur->next;
 		}
 	}
-
+	current_path = k;//parent数组变化量
 	//找出路径的终点
 	int end = 0;
 	double minweight = INFINITY;
 	for (int i = 0; i < NodeNum; i++)
 	{
-		if(Vertex[i].type >= level)
+		if (Vertex[i].type >= level)
 			if (minweight > dist[i])
 			{
 				end = i;
@@ -183,21 +187,6 @@ Node* Graph::SelectPath(int start, int level)
 		cur = cur->next;
 		search = parent[search];
 	}
-
-	//for (int i = 0; i < NodeNum; i++)
-	//{
-	//	qDebug() << i << " " << parent[i] << " " << dist[i] << endl;
-	//}
-
-	//cur = path;
-	//qDebug() << "total weight = " <<path->weight << endl;
-	//cur = cur->next;
-
-	//while (cur != nullptr)
-	//{
-	//	qDebug() << cur->code << "  longitude:" << cur->longitude << "  latitude:" << cur->latitude << endl;
-	//	cur = cur->next;
-	//}
 
 	return path;
 }
