@@ -122,7 +122,7 @@ Node* Graph::SelectPath(int start, int level)
 
 	std::priority_queue<node> q;
 	q.push(node{ start ,0});
-	
+	int k = 0;//path数组变量
 	while (!q.empty()) 
 	{
 		node x = q.top(); 
@@ -141,11 +141,16 @@ Node* Graph::SelectPath(int start, int level)
 				dist[nextcode] = dist[curcode] + cur->next->weight;
 				parent[nextcode] = curcode;
 				q.push(node{ nextcode,dist[nextcode] });
+
+				//MYH
+				path_node[k][0] = curcode;
+				path_node[k][1] = nextcode;
+				k++;
 			}
 			cur = cur->next;
 		}
 	}
-
+	current_path = k;//parent数组变化量
 	//找出路径的终点
 	int end = 0;
 	double minweight = INFINITY;

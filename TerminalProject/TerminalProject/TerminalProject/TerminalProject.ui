@@ -10,6 +10,12 @@
     <height>733</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>楷体</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="mouseTracking">
    <bool>true</bool>
   </property>
@@ -20,7 +26,15 @@
    <enum>Qt::ClickFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>TerminalProject</string>
+   <string>高速公路紧急救援系统</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="TerminalProject.qrc">
+    <normaloff>:/pic/img/6.ico</normaloff>:/pic/img/6.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0x00, 0xff, 0x00, 0x00);
+</string>
   </property>
   <widget class="Map" name="centralWidget">
    <property name="mouseTracking">
@@ -46,11 +60,19 @@
     <property name="title">
      <string>菜单</string>
     </property>
+    <property name="icon">
+     <iconset resource="TerminalProject.qrc">
+      <normaloff>:/pic/img/10.ico</normaloff>:/pic/img/10.ico</iconset>
+    </property>
     <addaction name="action_generaotr"/>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
      <string>设置</string>
+    </property>
+    <property name="icon">
+     <iconset resource="TerminalProject.qrc">
+      <normaloff>:/pic/img/9.ico</normaloff>:/pic/img/9.ico</iconset>
     </property>
     <addaction name="action_switch"/>
    </widget>
@@ -61,8 +83,18 @@
    <property name="checkable">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="TerminalProject.qrc">
+     <normaloff>:/pic/img/11.ico</normaloff>:/pic/img/11.ico</iconset>
+   </property>
    <property name="text">
     <string>事件生成</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>楷体</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
   <action name="action_switch">
@@ -72,8 +104,18 @@
    <property name="checked">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="TerminalProject.qrc">
+     <normaloff>:/pic/img/4.png</normaloff>:/pic/img/4.png</iconset>
+   </property>
    <property name="text">
     <string>显示运算过程</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>楷体</family>
+     <pointsize>12</pointsize>
+    </font>
    </property>
   </action>
  </widget>
