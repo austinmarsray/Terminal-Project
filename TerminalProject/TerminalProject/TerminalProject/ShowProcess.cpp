@@ -6,7 +6,7 @@ ShowProcess::ShowProcess(QWidget *parent)
 	fileread();
 	this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口背景透明
 	this->setWindowFlags(Qt::FramelessWindowHint);   //设置无边框窗口
-	ui.widget->installEventFilter(this);
+	ui.frame->installEventFilter(this);
 }
 
 ShowProcess::~ShowProcess()
@@ -41,7 +41,7 @@ void ShowProcess::fileread()
 
 void ShowProcess::drawnode()
 {
-	QPainter painter(ui.widget);
+	QPainter painter(ui.frame);
 	//绘制结点
 	for (int i = 0; i < number; i++) {
 		//指定画笔
@@ -51,7 +51,7 @@ void ShowProcess::drawnode()
 		painter.setPen(pen);
 		//painter.setPen(QColor(Qt::black));
 		painter.setPen(pen);
-		painter.setBrush(QBrush(Qt::lightGray));
+		painter.setBrush(QBrush(Qt::gray));
 		if (v[i].gettype() == 1) {
 			//1号结点
 			painter.setBrush(QBrush(Qt::green));
@@ -63,12 +63,11 @@ void ShowProcess::drawnode()
 		painter.drawEllipse(v[i].getlongitude(), v[i].getlatitude(), 20, 20);
 		painter.drawText(v[i].getlongitude() + 2, v[i].getlatitude() + 14, QString::number(i));
 	}
-
 }
 
 void ShowProcess::drawline()
 {
-	QPainter painter(ui.widget);
+	QPainter painter(ui.frame);
 	QFile file1("EdgeData.txt");
 	if (!file1.open(QIODevice::ReadOnly | QIODevice::Text))
 		return;
@@ -143,7 +142,7 @@ void ShowProcess::drawroad(int cur, int next, int num)
 	float x4 = x2 - l * sin(atan2((x2 - x1), (y2 - y1)) - a);
 	float y4 = y2 - l * cos(atan2((x2 - x1), (y2 - y1)) - a);
 
-	QPainter painter(ui.widget);
+	QPainter painter(ui.frame);
 	if (num == 1) {
 		//指定画笔
 		QPen pen(QColor(85, 170, 255));
@@ -200,7 +199,7 @@ void ShowProcess::getPath(Node *a)
 
 bool ShowProcess::eventFilter(QObject *watched, QEvent *event)
 {
-	if (watched == ui.widget && event->type() == QEvent::Paint)
+	if (watched == ui.frame && event->type() == QEvent::Paint)
 		paintEvent();
 	return QWidget::eventFilter(watched, event);
 }
@@ -247,7 +246,7 @@ void ShowProcess::animation()
 	for (int i = 0; i < current_path; i++) {
 		if (parent[i][0] >= 0 && parent[i][0] <= 56 && parent[i][1] >= 0 && parent[i][1] <= 56) {
 			QPropertyAnimation *d = new QPropertyAnimation(ui.xun, "geometry");
-			d->setDuration(600);//设置速度
+			d->setDuration(100);//设置速度
 			d->setStartValue(QRect(v[parent[i][0]].getlongitude(), v[parent[i][0]].getlatitude(), 30, 30));
 			d->setEndValue(QRect(v[parent[i][1]].getlongitude(), v[parent[i][1]].getlatitude(), 30, 30));
 			d->setEasingCurve(QEasingCurve::Linear);
@@ -275,7 +274,7 @@ void ShowProcess::animation()
 	//把最短路径加入动画组
 	for (int i = 0; i < k; i++) {
 		QPropertyAnimation *d = new QPropertyAnimation(ui.jiu, "geometry");
-		d->setDuration(1000);//设置速度
+		d->setDuration(100);//设置速度
 		d->setStartValue(QRect(v[path_node[i]].getlongitude(), v[path_node[i]].getlatitude(), 30, 30));
 		d->setEndValue(QRect(v[path_node[i + 1]].getlongitude(), v[path_node[i + 1]].getlatitude(), 30, 30));
 		d->setEasingCurve(QEasingCurve::Linear);
@@ -321,12 +320,21 @@ void ShowProcess::animation()
 	}
 
 	animationgroup->start();
-	/*if (flag == 2) {
-		animationgroup->clear();
-		ui.label->setGeometry(110, 20, 21, 21);
-		ui.label_2->setGeometry(110, 50, 21, 21);
-		ui.heart->setGeometry(135, 50, 21, 21);
-	}*/
+	ui.chick->setStyleSheet("border-image: url(:/pic/img/19.ico);");
+	QPropertyAnimation *d1 = new QPropertyAnimation(ui.chick, "geometry");
+	d1->setDuration(10000);//设置速度
+	d1->setStartValue(QRect(1550, 380, 16, 16));
+	d1->setEndValue(QRect(1840, 300, 32, 31));
+	d1->setEasingCurve(QEasingCurve::InCubic);
+	d1->start();
+
+	ui.chick1->setStyleSheet("border-image: url(:/pic/img/19.ico);");
+	QPropertyAnimation *d2 = new QPropertyAnimation(ui.chick1, "geometry");
+	d2->setDuration(10000);//设置速度
+	d2->setStartValue(QRect(1550, 380, 16, 16));
+	d2->setEndValue(QRect(1840, 460, 31, 31));
+	d2->setEasingCurve(QEasingCurve::InCubic);
+	d2->start();
 
 	s = s + "total_weight：" + QString::number(total_weight);
 	ui.textEdit->setPlainText(s);

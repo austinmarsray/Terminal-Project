@@ -17,10 +17,10 @@
    <iconset resource="TerminalProject.qrc">
     <normaloff>:/pic/img/6.ico</normaloff>:/pic/img/6.ico</iconset>
   </property>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
      <width>1830</width>
      <height>1010</height>
@@ -28,7 +28,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius:50px 70px; 
-background-color: rgb(0, 170, 0);</string>
+background-color: rgb(255, 255, 255,235);</string>
    </property>
    <widget class="QLabel" name="label">
     <property name="geometry">
@@ -41,7 +41,7 @@ background-color: rgb(0, 170, 0);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 12pt &quot;楷体&quot;;
-color: rgb(243, 255, 8);</string>
+color: rgb(0, 170, 255);</string>
     </property>
     <property name="text">
      <string>搜路图标：</string>
@@ -91,10 +91,25 @@ color: rgb(255, 170, 0);</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-radius:0px; 
-background-color: rgb(255, 255, 255);
-color: rgb(0, 170, 127);
-font: 12pt &quot;楷体&quot;;</string>
+     <string notr="true">QTextEdit{
+font: 12pt &quot;楷体&quot;;
+color: rgb(0, 0, 0);
+background-color:transparent;
+
+}
+QTextEdit::item{
+border:none;
+margin-top:3px;
+
+}
+QTextEdit::item:hover{
+padding-left:4px;
+margin-top:3px;
+background-color:rgba(255,255,255,0.2);
+}
+
+
+</string>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -142,9 +157,19 @@ font: 12pt &quot;楷体&quot;;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 255);
-color: rgb(170, 85, 0);
-font: 12pt &quot;楷体&quot;;</string>
+     <string notr="true">QLineEdit{
+image: url(:/pic/img/5.png);
+background-color: rgba(255, 255, 255,150);
+border-style:outset;
+
+border-width:0px;
+
+border-radius:15px;
+border-color: rgba(0,0,0,100);
+font: 12pt &quot;楷体&quot;;
+color:rgb(0,0,0);
+padding:6px;
+}</string>
     </property>
     <property name="readOnly">
      <bool>true</bool>
@@ -233,6 +258,38 @@ background-color: rgb(0x00, 0xff, 0x00, 0x00);</string>
      <string/>
     </property>
    </widget>
+   <widget class="QLabel" name="chick">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0x00, 0xff, 0x00, 0x00);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="chick1">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(0x00, 0xff, 0x00, 0x00);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>label_2</zorder>
    <zorder>label_3</zorder>
@@ -245,6 +302,21 @@ background-color: rgb(0x00, 0xff, 0x00, 0x00);</string>
    <zorder>xun</zorder>
    <zorder>jiu</zorder>
    <zorder>heart</zorder>
+   <zorder>chick</zorder>
+   <zorder>chick1</zorder>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>1840</x>
+     <y>380</y>
+     <width>51</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

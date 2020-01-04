@@ -122,7 +122,8 @@ Node* Graph::SelectPath(int start, int level)
 	std::priority_queue<node> q;
 	q.push(node{ start ,0 });
 	int k = 0;//path数组变量
-	while (!q.empty())
+
+	while (!q.empty()) 
 	{
 		node x = q.top();
 		q.pop();

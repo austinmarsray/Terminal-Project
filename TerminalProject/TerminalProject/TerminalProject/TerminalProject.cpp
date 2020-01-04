@@ -7,7 +7,6 @@ TerminalProject::TerminalProject(QWidget *parent)
 {
 	ui.setupUi(this);
 	this->showMaximized();
-	
 	//读取事故信息
 	QString filepath;
 	filepath = QString("./Accident.txt");
